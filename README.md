@@ -138,13 +138,56 @@ python -m venv .venv
 .venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
+
+Create a `.env` file in the root:
+
+```
+GEMINI_API_KEY=your_api_key_here
+
+```
+Run:
+```bash
+streamlit run app.py
+```
+
+---
+
+## ☁️ Deployment
+
+Deployed on **Streamlit Community Cloud**. `GEMINI_API_KEY` is set via Streamlit Secrets, not committed to the repo.
+
+---
+
+## 📷 Screenshots
+
+### Resume Analyzer
+
+![Resume Dashboard](assets/resume.png)
+
+### Dataset Analyzer
+
+![Dataset Dashboard](assets/dataset.png)
+---
+
+## 🚀 Future Roadmap
+
+- ✅ Multi-Agent Resume Pipeline
+- ✅ Dataset Analyzer
+- ✅ Pydantic Schema Validation
+- ✅ Retry Logic for Transient API Failures
+- ⏳ Real Tool/Function Calling (e.g., live salary data lookup)
+- ⏳ Resume vs. Job Description Matching
+- ⏳ User Authentication
+
+---
+
+## 👨‍💻 Developer
+
+**Prathamesh Sarange**
+B.Tech Computer Science Engineering, Sipna College of Engineering and Technology
+
+---
+
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/github/explore/main/topics/artificial-intelligence/artificial-intelligence.png" width="120"/>
-
-# 🤖 DataPilot AI
-
-### AI-Powered Career Intelligence Platform
-
-Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Capastedisme jo jo chije nahi hai o add kar aur vapas de aur chat me hi de me copy paste kar dungaIdentified critical README gaps and prioritized fixes for capstone submissionIdentified critical README gaps and prioritized fixes for capstone submissionStress-test on this before I touch it — five real problems, not cosmetic ones:
-<div align="center">
+Built with Python, Google Gemini AI, and Streamlit — Capstone project for Kaggle's 5-Day AI Agents Intensive Course.
+</div>
