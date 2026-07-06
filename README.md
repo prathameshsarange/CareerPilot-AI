@@ -352,4 +352,3 @@ B.Tech Computer Science Engineering, Sipna College of Engineering and Technology
 <div align="center">
 Built with Python, Google Gemini AI, and Streamlit — Capstone project for Kaggle's 5-Day AI Agents Intensive Course.
 </div>
->>>>>>> 64ad214 (docs: redesign README with project documentation)
