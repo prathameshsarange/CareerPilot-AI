@@ -310,7 +310,7 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file in the root:
-GEMINI_API_KEY=your_api_key_here
+
 Run:
 ```bash
 streamlit run app.py
@@ -324,10 +324,15 @@ Deployed on **Streamlit Community Cloud**. `GEMINI_API_KEY` is set via Streamlit
 
 ---
 
-## 📸 Screenshots
+## 📷 Screenshots
 
-assets/resume.png
-assets/dataset.png
+### Resume Analyzer
+
+![Resume Dashboard](assets/resume.png)
+
+### Dataset Analyzer
+
+![Dataset Dashboard](assets/dataset.png)
 ---
 
 ## 🚀 Future Roadmap
