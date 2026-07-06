@@ -1,233 +1,150 @@
-::: {align="center"}
+<div align="center">
+
 # 🤖 DataPilot AI
 
-### AI-Powered Career Intelligence Platform --- Multi-Agent Pipeline
+### AI-Powered Career Intelligence Platform — Multi-Agent Pipeline
 
-Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Career
-Roadmaps • AI Interview Preparation • Dataset Intelligence
+Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Career Roadmaps • AI Interview Preparation • Dataset Intelligence
 
-```{=html}
 <p align="center">
-```
-`<a href="#">`{=html}`<img src="https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white">`{=html}`</a>`{=html}
-`<a href="#">`{=html}`<img src="https://img.shields.io/badge/Google-Gemini%202.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white">`{=html}`</a>`{=html}
-`<a href="#">`{=html}`<img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">`{=html}`</a>`{=html}
-`<a href="#">`{=html}`<img src="https://img.shields.io/badge/Pydantic-E92063?style=for-the-badge">`{=html}`</a>`{=html}
-`<a href="#">`{=html}`<img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white">`{=html}`</a>`{=html}
-```{=html}
+<a href="#"><img src="https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
+<a href="#"><img src="https://img.shields.io/badge/Google-Gemini%202.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white"></a>
+<a href="#"><img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"></a>
+<a href="#"><img src="https://img.shields.io/badge/Pydantic-E92063?style=for-the-badge"></a>
+<a href="#"><img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"></a>
 </p>
-```
-```{=html}
-<p align="center">
-```
-`<img src="https://img.shields.io/github/stars/prathameshsarange/DataPilot-AI?style=social">`{=html}
-`<img src="https://img.shields.io/github/forks/prathameshsarange/DataPilot-AI?style=social">`{=html}
-```{=html}
-</p>
-```
-**🔗 Live App:**
-https://datapilot-ai-jnzhywdgqgbpenmwchhqg6.streamlit.app/
-:::
 
-------------------------------------------------------------------------
+<p align="center">
+<img src="https://img.shields.io/github/stars/prathameshsarange/DataPilot-AI?style=social">
+<img src="https://img.shields.io/github/forks/prathameshsarange/DataPilot-AI?style=social">
+</p>
+
+**🔗 Live App:** [https://datapilot-ai-jnzhywdgqgbpenmwchhqg6.streamlit.app/]
+
+</div>
+
+---
 
 ## 📖 About This Project
 
-DataPilot AI was built as a capstone project for the **5-Day AI Agents
-Intensive: Vibe Coding Course with Google (Kaggle)**.
+DataPilot AI was built as a capstone project for the **5-Day AI Agents Intensive: Vibe Coding Course with Google (Kaggle)**. It demonstrates a sequential multi-agent pipeline built on the Gemini API, structured output validation, and a deployed production dashboard — covering the course's core themes: agent orchestration, structured JSON output, and workflow reliability (retry handling on transient API failures).
 
-The project demonstrates a sequential multi-agent workflow using the
-Gemini API. Instead of relying on a single LLM response, the application
-divides resume analysis into multiple specialized AI agents. Each agent
-produces structured output that is validated with Pydantic before being
-passed to the next stage, improving reliability and consistency.
+Instead of a single LLM call, resume analysis is broken into five specialized agents, each consuming the previous agent's structured output.
 
-The application also includes a Dataset Intelligence module that
-analyzes uploaded CSV datasets and recommends suitable machine learning
-approaches.
-
-------------------------------------------------------------------------
+---
 
 ## 🧠 Multi-Agent Architecture
 
-``` text
+This is the actual pipeline — five sequential agents, each with a narrow responsibility, each validated against a Pydantic schema before being passed to the next stage:
+
+```text
                     Resume PDF
                          │
                          ▼
                  PDF Text Extraction
                          │
                          ▼
-              Resume Agent
+              ┌──────────────────────┐
+              │   1. Resume Agent     │  → career_domain, resume_analysis (ATS score, rating)
+              └──────────┬───────────┘
+                         ▼
+              ┌──────────────────────┐
+              │   2. Skill Gap Agent  │  → existing/missing skills, priorities
+              └──────────┬───────────┘
+                         ▼
+              ┌──────────────────────┐
+              │   3. Roadmap Agent    │  → 30/60/90-day learning plan
+              └──────────┬───────────┘
+                         ▼
+              ┌──────────────────────┐
+              │   4. Interview Agent  │  → technical/HR/behavioral questions
+              └──────────┬───────────┘
+                         ▼
+              ┌──────────────────────┐
+              │ 5. Career Advisor Agent│ → certifications, projects, career advice
+              └──────────┬───────────┘
+                         ▼
+              Pydantic Schema Validation
                          │
                          ▼
-               Skill Gap Agent
-                         │
-                         ▼
-                Roadmap Agent
-                         │
-                         ▼
-              Interview Agent
-                         │
-                         ▼
-           Career Advisor Agent
-                         │
-                         ▼
-           Pydantic Schema Validation
-                         │
-                         ▼
-          Interactive Streamlit Dashboard
+              Interactive Streamlit Dashboard
 ```
 
-Resume analysis uses retry logic with exponential backoff to handle
-temporary Gemini API failures.
+Each stage is wrapped in retry logic (exponential backoff) to handle transient Gemini server errors without crashing the pipeline.
 
-Dataset analysis follows a lightweight two-agent flow:
+The Dataset Analyzer runs a simpler two-agent chain: **Dataset Agent → ML Advisor Agent**, going from raw CSV statistics to algorithm recommendations.
 
-``` text
-CSV Dataset
-     │
-     ▼
-Dataset Agent
-     │
-     ▼
-ML Advisor Agent
-```
-
-------------------------------------------------------------------------
+---
 
 ## ✨ Features
 
 ### Resume Intelligence
-
--   ATS Score & Resume Rating
--   Career Domain Detection
--   Skill Gap Analysis
--   30/60/90-Day Learning Roadmap
--   Interview Question Generation
--   Certification Recommendations
--   Project Suggestions
--   Career Guidance
--   Downloadable PDF/Markdown Reports
+- ATS Score & Resume Rating
+- Career Domain & Experience Level Detection
+- Skill Gap Analysis (existing vs. missing, prioritized)
+- 30/60/90-Day Learning Roadmap
+- Certification & Project Recommendations
+- Interview Question Generation
+- Career Path & Salary Guidance
+- Downloadable Markdown/PDF Report
 
 ### Dataset Intelligence
+- CSV Upload with Preview & Missing/Duplicate Detection
+- Histogram Generation (Matplotlib)
+- AI-Generated Dataset Insights
+- ML Algorithm Recommendations
 
--   CSV Upload
--   Dataset Preview
--   Missing & Duplicate Value Detection
--   Histogram Generation
--   AI Dataset Insights
--   Machine Learning Algorithm Recommendations
-
-------------------------------------------------------------------------
+---
 
 ## 🛠️ Technology Stack
 
-  Category        Technologies
-  --------------- ------------------------------------------
-  Language        Python 3.14
-  AI              Google Gemini 2.5 Flash (`google-genai`)
-  Frontend        Streamlit
-  Validation      Pydantic
-  PDF Parsing     PyPDF
-  Data Analysis   Pandas
-  Visualization   Matplotlib
-  Report Export   ReportLab
+| Category | Technologies |
+|----------|--------------|
+| Language | Python 3.14 |
+| AI | Google Gemini 2.5 Flash (`google-genai`) |
+| Frontend | Streamlit |
+| Validation | Pydantic |
+| PDF Parsing | PyPDF |
+| Data Analysis | Pandas |
+| Visualization | Matplotlib |
+| Report Export | ReportLab |
 
-------------------------------------------------------------------------
+---
 
 ## 📂 Project Structure
 
-``` text
+```text
 DataPilot-AI
 │
-├── agents/
-├── core/
-├── schemas/
-├── services/
-├── ui/
-├── utils/
-├── app.py
+├── agents/          # 5 pipeline agents + dataset agents
+├── core/             # Gemini client, prompts, config, JSON parsing helper
+├── schemas/          # Pydantic ReportSchema
+├── services/         # Business logic (resume, dataset, report conversion)
+├── ui/               # Streamlit pages (home, dataset)
+├── utils/            # Chart generation
+├── app.py            # Entry point
 ├── requirements.txt
 └── README.md
 ```
 
-------------------------------------------------------------------------
+---
 
 ## 🚀 Setup & Run Locally
 
-``` bash
+```bash
 git clone https://github.com/prathameshsarange/DataPilot-AI.git
 cd DataPilot-AI
-
 python -m venv .venv
-.venv\Scripts\activate
-
+.venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
+<div align="center">
 
-Create a `.env` file:
+<img src="https://raw.githubusercontent.com/github/explore/main/topics/artificial-intelligence/artificial-intelligence.png" width="120"/>
 
-``` env
-GEMINI_API_KEY=your_api_key_here
-```
+# 🤖 DataPilot AI
 
-Run the application:
+### AI-Powered Career Intelligence Platform
 
-``` bash
-streamlit run app.py
-```
-
-------------------------------------------------------------------------
-
-## ☁️ Deployment
-
-The application is deployed on **Streamlit Community Cloud**.
-
-Live Demo: https://datapilot-ai-jnzhywdgqgbpenmwchhqg6.streamlit.app/
-
-The Gemini API key is securely stored using Streamlit Secrets.
-
--------------------------------------------------------------------------
-
-
-## 📷 Screenshots
-
-### Resume Analyzer
-
-![Resume Dashboard](assets/resume.png)
-
-### Dataset Analyzer
-
-![Dataset Dashboard](assets/dataset.png)
--------------------------------------------------------------------------
-
-## 🚀 Future Roadmap
-
--   ✅ Multi-Agent Resume Analysis
--   ✅ Dataset Intelligence
--   ✅ Structured Output Validation
--   ✅ Retry Logic
--   ⏳ Resume vs Job Description Matching
--   ⏳ Function Calling
--   ⏳ Live Job Recommendations
--   ⏳ User Authentication
-
-------------------------------------------------------------------------
-
-## 👨‍💻 Developer
-
-**Prathamesh Sarange**
-
-B.Tech Computer Science Engineering
-
-Sipna College of Engineering and Technology
-
--   GitHub: https://github.com/prathameshsarange
-
-------------------------------------------------------------------------
-
-::: {align="center"}
-Built with **Python, Google Gemini AI, Streamlit, and Pydantic**
-
-Capstone Project for **Google × Kaggle -- 5-Day AI Agents Intensive**
-:::
+Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Capastedisme jo jo chije nahi hai o add kar aur vapas de aur chat me hi de me copy paste kar dungaIdentified critical README gaps and prioritized fixes for capstone submissionIdentified critical README gaps and prioritized fixes for capstone submissionStress-test on this before I touch it — five real problems, not cosmetic ones:
+<div align="center">
