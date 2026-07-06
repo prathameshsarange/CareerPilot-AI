@@ -19,7 +19,7 @@ Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Career Ro
 <img src="https://img.shields.io/github/forks/prathameshsarange/DataPilot-AI?style=social">
 </p>
 
-**🔗 Live App:** [(https://datapilot-ai-jnzhywdgqgbpenmwchhqg6.streamlit.app/)]
+**🔗 Live App:** [https://datapilot-ai-jnzhywdgqgbpenmwchhqg6.streamlit.app/]
 
 </div>
 
@@ -138,20 +138,7 @@ python -m venv .venv
 .venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
-
-Create a `.env` file in the root:
-Python 3.14.3Python 3.14.3 confirmed locally. So the dropdown's default (3.14) actually matches — my earlier warning to "avoid 3.14" doesn't apply if this is genuinely what you tested on. Correcting myself: leave Python version at 3.14, don't change it. Changing it to 3.11/3.12 now would introduce risk I wrongly told you to add — you'd be deploying on a version you never tested locally, which is worse than staying on what you've verified.
-Only actual pending item: Secrets box still has placeholder text, not your real key. Clear it, enter:
-GEMINI_API_KEY = "your_actual_key"
-Save, then Deploy.isme to repo add hi nahi ki haiGrappled with missing context and absent visual referenceGrappled with missing context and absent visual referenceKis screenshot/form ki baat kar raha hai — "isme" kya refer kar raha hai? Koi image nahi aayi is message mein. Agar tu keh raha hai ki Secrets box mein repo-related kuch missing hai, toh Secrets sirf environment variables (jaise GEMINI_API_KEY) ke liye hai — repo already pichle step mein (Repository field) prathameshsarange/DataPilot-AI daal chuka hai, wo alag field tha.
-Agar tu keh raha hai repo field abhi bhi khaali hai ya galat hai, screenshot bhej — bina dekhe confirm nahi karunga.apni bhasha me samjha  isme edme file khali haiREADME likha aur misleading description fix karna zaroori haiREADME likha aur misleading description fix karna zaroori haiHaan, README khaali hai — koi content nahi likha gaya abhi tak, sirf structure hai. Ye real problem hai, sirf cosmetic nahi: capstone judging mein README hi pehli cheez hai jo judge padhega, live demo se pehle. Khaali README ka matlab hai judge ko pata hi nahi chalega tune kya banaya, kaise banaya, course concepts kaise map hote hain — sab kuch guess karna padega.
-Ek aur galti dikh rahi hai jo tune notice nahi ki: "About" section mein likha hai "powered by Google ADK and Gemini." Ye galat claim hai — tera code google-adk use hi nahi karta kahin bhi (maine pehle flag kiya tha, requirements.txt mein tha lekin koi file usse import nahi karti, dead dependency hai). Agar judge repo dekhega aur "Google ADK" claim padhega, phir code mein dhundega aur nahi milega — ye credibility hit hai, especially ek course ke capstone mein jo specifically agent frameworks pe focus karta hai. Ye fix karna zaroori hai, sirf README likhna kaafi nahi.
-Abhi karna hai:
-
-About description fix kar — "Google ADK" hata, sirf "Gemini API" likh (jo actually use ho raha hai).
-README likhna — problem statement, 5-agent architecture, tech stack (Streamlit + Gemini, ADK nahi), course concepts se mapping, setup instructions, live demo link.
-
-Time kam hai — README main likh du turant, structure de? Ya tu khud likhega aur main sirf review karu?<div align="center">
+<div align="center">
 
 <img src="https://raw.githubusercontent.com/github/explore/main/topics/artificial-intelligence/artificial-intelligence.png" width="120"/>
 
@@ -160,15 +147,7 @@ Time kam hai — README main likh du turant, structure de? Ya tu khud likhega au
 ### AI-Powered Career Intelligence Platform
 
 Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Capastedisme jo jo chije nahi hai o add kar aur vapas de aur chat me hi de me copy paste kar dungaIdentified critical README gaps and prioritized fixes for capstone submissionIdentified critical README gaps and prioritized fixes for capstone submissionStress-test on this before I touch it — five real problems, not cosmetic ones:
-
-Architecture diagram is a lie by omission. It shows Master Agent → Gemini AI → JSON as one box. That erases the entire 5-agent sequential pipeline you spent hours building specifically to satisfy the course's multi-agent requirement. If a judge reads this diagram, they see a single-call wrapper, not orchestration. This is the most damaging gap in the file.
-Scikit-learn is listed as a tech you use — you don't. Nothing in any file we've built imports sklearn. Same category of problem as the "Google ADK" claim I flagged in the GitHub About section. If a judge checks requirements.txt (which doesn't have it) or greps the code, this is an unverified claim sitting in your README.
-YOUR_USERNAME placeholder is still literally in the badge URLs. Unedited template text submitted as-is.
-Zero mention this is a capstone for a specific course. Judges are scoring against course concepts (multi-agent orchestration, structured output, evaluation). Nothing here tells them how your architecture maps to what they taught. That's free points left on the table.
-No live URL, no setup instructions, no API key requirement mentioned. You just spent this entire conversation getting a deployment working — the README doesn't reference it anywhere.
-
-Fixed version below — added capstone context, corrected architecture diagram to show the real pipeline, removed unverified sklearn claim, added setup/deploy sections, fixed placeholders. Screenshots section left as a marker since you don't have time to shoot them — fill or delete before submitting.
-markdown<div align="center">
+<div align="center">
 
 # 🤖 DataPilot AI
 
