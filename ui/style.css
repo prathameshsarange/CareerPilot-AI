@@ -1,0 +1,244 @@
+/* DataPilot AI Premium Theme v2 */
+
+:root{
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --secondary:#7c3aed;
+    --accent:#06b6d4;
+    --bg:#f4f7fb;
+    --card:rgba(255,255,255,.92);
+    --text:#1e293b;
+    --text-light:#64748b;
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+.stApp{
+    background:linear-gradient(135deg,#f4f7fb,#e8edf7);
+}
+
+.main .block-container{
+    max-width:1250px;
+    padding-top:2rem;
+    padding-bottom:2rem;
+}
+
+html,body{
+    font-family:Inter,Segoe UI,sans-serif;
+    color:var(--text);
+}
+
+/* Ensure main content headings are high-contrast and not styled like sidebar headings */
+.stMainBlockContainer h1, .stMainBlockContainer h2, .stMainBlockContainer h3,
+.main .block-container h1, .main .block-container h2, .main .block-container h3 {
+    color: var(--text) !important;
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+}
+
+/* Sidebar */
+
+/* Target Streamlit's sidebar (rendered as a section element) and keep its widgets legible */
+section[data-testid="stSidebar"], section.stSidebar {
+    background: linear-gradient(180deg,#172554,#312e81);
+    border-right: none;
+}
+
+/* Force text inside sidebar to be light for contrast */
+section[data-testid="stSidebar"] * {
+    color: #fff !important;
+}
+
+/* Prevent main-card styles from bleeding into the sidebar widget containers */
+section[data-testid="stSidebar"] .element-container,
+section[data-testid="stSidebar"] .stElementContainer,
+section[data-testid="stSidebar"] div[data-testid="stAlert"],
+section[data-testid="stSidebar"] .stAlertContainer,
+section[data-testid="stSidebar"] .stMarkdown {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Hero */
+
+.hero{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    border-radius:22px;
+    padding:40px;
+    margin-bottom:30px;
+    box-shadow:0 20px 45px rgba(37,99,235,.22);
+}
+
+/* Cards */
+
+/* Scope main content cards to the main block container so the sidebar is not affected */
+.stMainBlockContainer .stElementContainer > [data-testid="stMetric"],
+.stMainBlockContainer [data-testid="stDataFrame"],
+.stMainBlockContainer [data-testid="stFileUploader"],
+.main .block-container [data-testid="stMetric"],
+.main .block-container [data-testid="stDataFrame"],
+.main .block-container [data-testid="stFileUploader"] {
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(148,163,184,.12);
+    box-shadow: var(--shadow);
+}
+
+div[data-testid="stMetric"]{
+    min-height:120px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    transition:.25s;
+}
+
+div[data-testid="stMetric"]:hover{
+    transform:translateY(-4px);
+}
+
+div[data-testid="stMetricValue"]{
+    font-weight:800;
+}
+
+/* Buttons */
+
+.stButton>button,
+.stFormSubmitButton>button{
+    width:100%;
+    min-height:50px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:#fff;
+    font-weight:700;
+    transition:.2s;
+}
+
+.stButton>button:hover,
+.stFormSubmitButton>button:hover{
+    transform:translateY(-2px);
+}
+
+/* File uploader */
+
+[data-testid="stFileUploader"] section{
+    border: 2px dashed var(--primary) !important;
+    border-radius: 14px;
+    padding: 18px;
+    background: rgba(255,255,255,0.96);
+    transition: transform .18s ease, background .18s ease;
+}
+
+[data-testid="stFileUploader"] section:hover{
+    transform: translateY(-2px);
+    background: rgba(248,251,255,1);
+}
+
+/* Tabs */
+
+.stTabs [data-baseweb="tab"]{
+    border-radius:12px;
+}
+
+.stTabs [aria-selected="true"]{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white!important;
+}
+
+/* Alerts */
+
+div[data-testid="stAlert"]{
+    border-radius:14px;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{
+    background:#2563eb;
+    border-radius:8px;
+}
+
+hr{
+    border:none;
+    height:1px;
+    background:linear-gradient(90deg,transparent,#2563eb,transparent);
+}
+
+@media(max-width:768px){
+    .main .block-container{
+        padding-left:1rem;
+        padding-right:1rem;
+    }
+}
+
+/* Strong overrides to ensure main content (not sidebar) is high-contrast and fully visible */
+.stMainBlockContainer, .main .block-container {
+    color: var(--text) !important;
+    opacity: 1 !important;
+}
+
+.stMainBlockContainer h1, .stMainBlockContainer h2, .stMainBlockContainer h3,
+.main .block-container h1, .main .block-container h2, .main .block-container h3,
+.stMainBlockContainer .stMarkdown p, .main .block-container .stMarkdown p {
+    color: var(--text) !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+
+/* ensure uploader and cards are fully opaque */
+.stMainBlockContainer [data-testid="stFileUploader"],
+.stMainBlockContainer [data-testid="stMetric"],
+.main .block-container [data-testid="stFileUploader"],
+.main .block-container [data-testid="stMetric"] {
+    opacity: 1 !important;
+}
+
+/* Global force: override any inherited light colors inside main content */
+.stMainBlockContainer, .stMainBlockContainer *,
+.main .block-container, .main .block-container * {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+    mix-blend-mode: normal !important;
+    text-shadow: none !important;
+}
+
+/* Center alignment rules for home/dashboard */
+.main .block-container{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+.hero > div{ display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:1rem; }
+
+/* center Streamlit metric cards in our layout */
+.stMainBlockContainer .stElementContainer > [data-testid="stMetric"],
+.main .block-container [data-testid="stMetric"]{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.upload-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    border-radius:12px;
+}
+.file-preview{ text-align:center; margin-top:8px; color:var(--text); }
+
+.card{ text-align:center; }
+.card.highlight{ padding:18px; }
+.badge{ display:inline-block; padding:6px 12px; border-radius:999px; background:var(--primary); color:#fff; margin:4px; }
+.cert-card{ border:1px solid rgba(148,163,184,.12); padding:10px; border-radius:10px; margin-bottom:8px; text-align:center; }
