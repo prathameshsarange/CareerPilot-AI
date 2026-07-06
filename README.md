@@ -237,3 +237,4 @@ B.Tech Computer Science Engineering
 Built with ❤️ using **Python**, **Google Gemini AI**, and **Streamlit**
 
 </div>
+>>>>>>> 64ad214 (docs: redesign README with project documentation)
