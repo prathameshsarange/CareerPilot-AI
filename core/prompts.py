@@ -66,6 +66,11 @@ Return ONLY valid JSON, no markdown, no explanations:
       "day90": []
   }
 }
+
+CRITICAL: Every item inside day30, day60, and day90 MUST be a plain string sentence
+(e.g. "Learn SQL fundamentals: joins, aggregations, and basic queries.").
+Do NOT return objects or dictionaries as items (e.g. {"skill": "...", "description": "..."} is FORBIDDEN).
+If you have multiple details for one task, combine them into a single descriptive string.
 """
 
 
