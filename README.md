@@ -1,194 +1,96 @@
-<div align="center">
+# DataPilot AI
 
-# 🤖 DataPilot AI
+AI career copilot for resume analysis and dataset analysis.
 
-### AI-Powered Career Intelligence Platform — Multi-Agent Pipeline
+## Live Demo
 
-Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Career Roadmaps • AI Interview Preparation • Dataset Intelligence
+[Open the live DataPilot AI demo](https://datapilot-ai11212.streamlit.app/)
 
-<p align="center">
-<a href="#"><img src="https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
-<a href="#"><img src="https://img.shields.io/badge/Google-Gemini%202.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white"></a>
-<a href="#"><img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"></a>
-<a href="#"><img src="https://img.shields.io/badge/Pydantic-E92063?style=for-the-badge"></a>
-<a href="#"><img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"></a>
-</p>
+## Overview
 
-<p align="center">
-<img src="https://img.shields.io/github/stars/prathameshsarange/DataPilot-AI?style=social">
-<img src="https://img.shields.io/github/forks/prathameshsarange/DataPilot-AI?style=social">
-</p>
+DataPilot AI is a Streamlit application that uses Google Gemini to analyze PDF resumes and CSV datasets. Resume analysis produces structured career guidance, while dataset analysis summarizes data quality and insights and provides machine-learning recommendations.
 
-**🔗 Live App:** [https://datapilot-ai-jnzhywdgqgbpenmwchhqg6.streamlit.app/](https://datapilot-ai-jnzhywdgqgbpenmwchhqg6.streamlit.app/)
+## Features
 
-</div>
+- **Resume Analyzer:** Upload a PDF resume to get resume analysis, career-domain classification, skill-gap analysis, a 30/60/90-day roadmap, interview questions, project and certification suggestions, and career guidance.
+- **Dataset Analyzer:** Upload a CSV to preview the data, inspect basic dataset information, identify missing values and duplicate rows, and view a generated histogram.
+- **ML Advisor:** Get AI-generated suggestions for problem type, algorithms, evaluation metrics, and feature-engineering ideas based on the uploaded dataset.
+- **AI-generated reports:** View the resume report in the app and download it as Markdown or PDF.
 
----
+## Tech Stack
 
-## 📖 About This Project
+- Python
+- Streamlit
+- Google Gemini API with structured JSON output
+- Pydantic
+- pandas
+- reportlab
 
-DataPilot AI was built as a capstone project for the **5-Day AI Agents Intensive: Vibe Coding Course with Google (Kaggle)**. It demonstrates a sequential multi-agent pipeline built on the Gemini API, structured output validation, and a deployed production dashboard — covering the course's core themes: agent orchestration, structured JSON output, and workflow reliability (retry handling on transient API failures).
+## How It Works
 
-Instead of a single LLM call, resume analysis is broken into five specialized agents, each consuming the previous agent's structured output.
-
----
-
-## 🧠 Multi-Agent Architecture
-
-This is the actual pipeline — five sequential agents, each with a narrow responsibility, each validated against a Pydantic schema before being passed to the next stage:
+Resume analysis uses a five-agent pipeline. Each stage passes its structured output to the next stage:
 
 ```text
-                    Resume PDF
-                         │
-                         ▼
-                 PDF Text Extraction
-                         │
-                         ▼
-              ┌──────────────────────┐
-              │   1. Resume Agent     │  → career_domain, resume_analysis (ATS score, rating)
-              └──────────┬───────────┘
-                         ▼
-              ┌──────────────────────┐
-              │   2. Skill Gap Agent  │  → existing/missing skills, priorities
-              └──────────┬───────────┘
-                         ▼
-              ┌──────────────────────┐
-              │   3. Roadmap Agent    │  → 30/60/90-day learning plan
-              └──────────┬───────────┘
-                         ▼
-              ┌──────────────────────┐
-              │   4. Interview Agent  │  → technical/HR/behavioral questions
-              └──────────┬───────────┘
-                         ▼
-              ┌──────────────────────┐
-              │ 5. Career Advisor Agent│ → certifications, projects, career advice
-              └──────────┬───────────┘
-                         ▼
-              Pydantic Schema Validation
-                         │
-                         ▼
-              Interactive Streamlit Dashboard
+ResumeAgent -> SkillGapAgent -> RoadmapAgent -> InterviewAgent -> CareerAdvisorAgent
 ```
 
-Each stage is wrapped in retry logic (exponential backoff) to handle transient Gemini server errors without crashing the pipeline.
-
-The Dataset Analyzer runs a simpler two-agent chain: **Dataset Agent → ML Advisor Agent**, going from raw CSV statistics to algorithm recommendations.
-
----
-
-## ✨ Features
-
-### Resume Intelligence
-- ATS Score & Resume Rating
-- Career Domain & Experience Level Detection
-- Skill Gap Analysis (existing vs. missing, prioritized)
-- 30/60/90-Day Learning Roadmap
-- Certification & Project Recommendations
-- Interview Question Generation
-- Career Path & Salary Guidance
-- Downloadable Markdown/PDF Report
-
-### Dataset Intelligence
-- CSV Upload with Preview & Missing/Duplicate Detection
-- Histogram Generation (Matplotlib)
-- AI-Generated Dataset Insights
-- ML Algorithm Recommendations
-
----
-
-## 🛠️ Technology Stack
-
-| Category | Technologies |
-|----------|--------------|
-| Language | Python 3.14 |
-| AI | Google Gemini 2.5 Flash (`google-genai`) |
-| Frontend | Streamlit |
-| Validation | Pydantic |
-| PDF Parsing | PyPDF |
-| Data Analysis | Pandas |
-| Visualization | Matplotlib |
-| Report Export | ReportLab |
-
----
-
-## 📂 Project Structure
+The dataset workflow uses a separate two-agent flow:
 
 ```text
-DataPilot-AI
-│
-├── agents/          # 5 pipeline agents + dataset agents
-├── core/             # Gemini client, prompts, config, JSON parsing helper
-├── schemas/          # Pydantic ReportSchema
-├── services/         # Business logic (resume, dataset, report conversion)
-├── ui/               # Streamlit pages (home, dataset)
-├── utils/            # Chart generation
-├── app.py            # Entry point
-├── requirements.txt
-└── README.md
+DatasetAgent -> MLAdvisorAgent
 ```
 
----
+## Screenshots
 
-## 🚀 Setup & Run Locally
+Add screenshots here when they are available:
 
-```bash
+![Resume Analyzer screenshot](path/to/resume-screenshot.png)
+
+![Dataset Analyzer screenshot](path/to/dataset-screenshot.png)
+
+## Local Setup
+
+Clone the repository and enter the project directory:
+
+```powershell
 git clone https://github.com/prathameshsarange/DataPilot-AI.git
 cd DataPilot-AI
+```
+
+Create and activate a virtual environment:
+
+```powershell
 python -m venv .venv
-.venv\Scripts\activate        # Windows
+.venv\Scripts\Activate.ps1
+```
+
+Install the dependencies:
+
+```powershell
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the root:
+Create a `.env` file in the project root and add your Gemini API key:
 
-```
+```text
 GEMINI_API_KEY=your_api_key_here
 ```
 
-Run:
-```bash
+Start the Streamlit app:
+
+```powershell
 streamlit run app.py
 ```
 
----
+## Project Structure
 
-## ☁️ Deployment
-
-Deployed on **Streamlit Community Cloud**. `GEMINI_API_KEY` is set via Streamlit Secrets, not committed to the repo.
-
----
-
-## 📷 Screenshots
-
-### Resume Analyzer
-
-![Resume Dashboard](assets/resume.png)
-
-### Dataset Analyzer
-
-![Dataset Dashboard](assets/dataset.png)
-
----
-
-## 🚀 Future Roadmap
-
-- ✅ Multi-Agent Resume Pipeline
-- ✅ Dataset Analyzer
-- ✅ Pydantic Schema Validation
-- ✅ Retry Logic for Transient API Failures
-- ⏳ Real Tool/Function Calling (e.g., live salary data lookup)
-- ⏳ Resume vs. Job Description Matching
-- ⏳ User Authentication
-
----
-
-## 👨‍💻 Developer
-
-**Prathamesh Sarange**
-B.Tech Computer Science Engineering, Sipna College of Engineering and Technology
-
----
-
-<div align="center">
-Built with Python, Google Gemini AI, and Streamlit — Capstone project for Kaggle's 5-Day AI Agents Intensive Course.
-</div>
+```text
+DataPilot-AI/
+├── agents/       # Resume, career, dataset, and ML advisor agents
+├── services/     # Resume, dataset, and report services
+├── ui/           # Streamlit home and dataset pages
+├── schemas/      # Pydantic report schemas
+├── core/         # Gemini client, prompts, configuration, and JSON helpers
+├── app.py        # Application entry point
+└── requirements.txt
+```
