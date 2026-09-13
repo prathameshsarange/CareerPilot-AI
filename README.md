@@ -169,7 +169,7 @@ Deployed on **Streamlit Community Cloud**. `GEMINI_API_KEY` is set via Streamlit
 
 ![Resume Dashboard](assets/resume.png)
 
-### Dataset Analyzer
+### Dataset Analyzer 
 
 ![Dataset Dashboard](assets/dataset.png)
 
