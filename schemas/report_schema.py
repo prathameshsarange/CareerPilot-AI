@@ -67,3 +67,35 @@ class ReportSchema(BaseModel):
     interview: Interview
     career: Career
     final_advice: str
+
+
+# --- Per-agent response wrappers -------------------------------------------
+# Passed as response_schema to Gemini so it uses constrained JSON decoding
+# instead of free-text generation. This guarantees syntactically valid JSON
+# (no unescaped quotes, no truncated braces, no markdown fences) — the class
+# of bug behind "Invalid JSON received from Gemini" / "Expecting ',' delimiter"
+# errors. Kept separate from the per-stage models above so nothing about the
+# final ReportSchema (used for downstream rendering) has to change.
+
+class ResumeAgentResponse(BaseModel):
+    career_domain: CareerDomain
+    resume_analysis: ResumeAnalysis
+
+
+class SkillGapResponse(BaseModel):
+    skill_gap: SkillGap
+
+
+class RoadmapResponse(BaseModel):
+    roadmap: Roadmap
+
+
+class InterviewResponse(BaseModel):
+    interview: Interview
+
+
+class CareerAdvisorResponse(BaseModel):
+    certifications: List[Certification]
+    projects: List[Project]
+    career: Career
+    final_advice: str

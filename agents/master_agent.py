@@ -14,7 +14,10 @@ def _with_retry(fn, *args):
     """Retry a stage on Gemini server errors with backoff. JSON errors are not retried
     (they indicate a prompt/schema issue, not a transient failure)."""
 
-    delays = [2, 5, 10]
+    # Cut from 3 attempts to 2 — a single flaky stage used to cost up to 3
+    # calls; across 5 sequential stages that could burn 15 calls on one
+    # resume analysis for a purely transient server error.
+    delays = [2, 5]
     last_error = None
 
     for delay in delays:

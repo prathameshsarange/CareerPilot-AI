@@ -9,21 +9,17 @@ from utils.chart_generator import generate_histogram
 
 def show_dataset():
 
-    st.title("📊 AI Dataset Analyzer")
+    st.title("AI Dataset Analyzer")
 
     st.markdown(
         """
 Analyze your dataset using AI.
 
-✔ Dataset Summary
-
-✔ Data Preview
-
-✔ Visualization
-
-✔ AI Insights
-
-✔ ML Algorithm Recommendation
+- Dataset Summary
+- Data Preview
+- Visualization
+- AI Insights
+- ML Algorithm Recommendation
 """
     )
 
@@ -52,7 +48,7 @@ Analyze your dataset using AI.
         st.error(f"Unable to read CSV.\n\n{e}")
         return
 
-    st.success(f"✅ Uploaded: {uploaded_file.name}")
+    st.success(f"Uploaded: {uploaded_file.name}", icon=":material/check_circle:")
 
     st.divider()
 
@@ -74,8 +70,8 @@ Analyze your dataset using AI.
 
     preview_tab, info_tab = st.tabs(
         [
-            "📄 Preview",
-            "📋 Dataset Info"
+            ":material/table_view: Preview",
+            ":material/list_alt: Dataset Info"
         ]
     )
 
@@ -103,11 +99,11 @@ Analyze your dataset using AI.
     st.divider()
 
     if st.button(
-        "🚀 Analyze Dataset",
+        ":material/rocket_launch: Analyze Dataset",
         use_container_width=True
     ):
 
-        with st.spinner("🤖 AI is analyzing your dataset..."):
+        with st.spinner("AI is analyzing your dataset…"):
 
             try:
 
@@ -125,13 +121,13 @@ Analyze your dataset using AI.
 
                 return
 
-        st.success("✅ Analysis Completed")
+        st.success("Analysis completed", icon=":material/check_circle:")
 
         analysis_tab, chart_tab, ml_tab = st.tabs(
             [
-                "📊 AI Analysis",
-                "📈 Charts",
-                "🧠 ML Advisor"
+                ":material/insights: AI Analysis",
+                ":material/bar_chart: Charts",
+                ":material/psychology: ML Advisor"
             ]
         )
 
@@ -156,5 +152,6 @@ Analyze your dataset using AI.
         st.divider()
 
         st.info(
-            "💡 Tip: Clean missing values and engineer better features before training ML models."
+            "Tip: Clean missing values and engineer better features before training ML models.",
+            icon=":material/lightbulb:"
         )
