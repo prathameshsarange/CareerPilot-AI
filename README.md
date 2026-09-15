@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🤖 DataPilot AI
+# 🤖 CareerPilot AI
 
-### AI-Powered Career Intelligence Platform — Multi-Agent Pipeline
+### CareerPilot AI — AI-Powered Resume & Job Intelligence Platform
 
 Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Career Roadmaps • AI Interview Preparation • Dataset Intelligence
 
@@ -27,7 +27,7 @@ Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Career Ro
 
 ## 📖 About This Project
 
-DataPilot AI was built as a capstone project for the **5-Day AI Agents Intensive: Vibe Coding Course with Google (Kaggle)**. It demonstrates a sequential multi-agent pipeline built on the Gemini API, schema-constrained structured output, and a deployed production dashboard — covering the course's core themes: agent orchestration, structured JSON output, and workflow reliability (retry handling on transient API failures).
+CareerPilot AI is an AI-powered resume and job intelligence platform that analyzes resumes, matches candidates with jobs, analyzes datasets, and provides salary insights. It was built as a capstone project for the **5-Day AI Agents Intensive: Vibe Coding Course with Google (Kaggle)**. It demonstrates a sequential multi-agent pipeline built on the Gemini API, schema-constrained structured output, and a deployed production dashboard — covering the course's core themes: agent orchestration, structured JSON output, and workflow reliability (retry handling on transient API failures).
 
 Instead of a single LLM call, resume analysis is broken into five specialized agents, each consuming the previous agent's structured output.
 
@@ -146,6 +146,10 @@ Create a `.env` file in the root:
 
 ```
 GEMINI_API_KEY=your_api_key_here
+
+# Optional: enables live salary lookup through the Gemini function-calling tool
+ADZUNA_APP_ID=your_adzuna_app_id
+ADZUNA_APP_KEY=your_adzuna_app_key
 ```
 
 Run:
@@ -180,7 +184,7 @@ Deployed on **Streamlit Community Cloud**. `GEMINI_API_KEY` is set via Streamlit
 - ✅ Schema-Constrained Structured JSON Output (Gemini `response_schema`)
 - ✅ Retry Logic for Transient API Failures
 - ✅ Process-Wide Result Caching
-- ⏳ Real Tool/Function Calling (e.g., live salary data lookup)
+- ✅ Real Tool/Function Calling (live salary lookup via Adzuna job listings)
 - ⏳ Resume vs. Job Description Matching
 - ⏳ User Authentication
 

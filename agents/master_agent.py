@@ -1,12 +1,18 @@
+import os
 import time
 
+from google.genai import types
 from google.genai.errors import ServerError
 
+from core.gemini_client import get_gemini_client
+from core.json_utils import parse_json_response
+from core.prompts import MASTER_PROMPT
 from agents.resume_agent import ResumeAgent
 from agents.skill_gap_agent import SkillGapAgent
 from agents.roadmap_agent import RoadmapAgent
 from agents.interview_agent import InterviewAgent
 from agents.project_agent import CareerAdvisorAgent
+from services.salary_service import lookup_salary
 from schemas.report_schema import ReportSchema
 
 
@@ -67,6 +73,49 @@ class MasterAgent:
         self.career_advisor_agent = CareerAdvisorAgent()
 
     def run(self, resume_text: str) -> ReportSchema:
+
+        if os.getenv("CAREERPILOT_PIPELINE", "compact").lower() != "staged":
+            return self._run_compact(resume_text)
+
+        return self._run_staged(resume_text)
+
+    def _run_compact(self, resume_text: str) -> ReportSchema:
+        prompt = f"""
+{MASTER_PROMPT}
+
+Resume:
+
+{resume_text}
+"""
+        response = get_gemini_client().models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=ReportSchema,
+            ),
+        )
+
+        if response.parsed is not None:
+            report = response.parsed
+        else:
+            report = ReportSchema.model_validate(parse_json_response(response.text))
+
+        if report.career.roles:
+            salary_data = lookup_salary(report.career.roles[0])
+            if salary_data.get("status") == "ok":
+                minimum = salary_data.get("salary_min")
+                maximum = salary_data.get("salary_max")
+                minimum_text = f"{minimum:,}" if minimum is not None else "n/a"
+                maximum_text = f"{maximum:,}" if maximum is not None else "n/a"
+                salary = f"{salary_data['currency']} {minimum_text} - {maximum_text} (Adzuna, {salary_data['sample_size']} listings)"
+                report = report.model_copy(
+                    update={"career": report.career.model_copy(update={"salary": salary})}
+                )
+
+        return report
+
+    def _run_staged(self, resume_text: str) -> ReportSchema:
 
         # Stage 1: Resume Agent -> career_domain + resume_analysis
         stage1 = _with_retry(self.resume_agent.analyze_resume, resume_text)

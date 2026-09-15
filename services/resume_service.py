@@ -1,7 +1,15 @@
+import hashlib
+import json
+import os
+
 import streamlit as st
 
 from agents.master_agent import MasterAgent
 from pypdf import PdfReader
+from schemas.report_schema import ReportSchema
+
+
+CACHE_DIR = os.path.join("data", ".resume_cache")
 
 
 def extract_text(pdf_path):
@@ -31,11 +39,39 @@ def _run_pipeline(resume_text: str):
     return MasterAgent().run(resume_text)
 
 
+def _cache_path(resume_text: str) -> str:
+    digest = hashlib.sha256(resume_text.encode("utf-8")).hexdigest()
+    return os.path.join(CACHE_DIR, f"{digest}.json")
+
+
+def _load_disk_cache(resume_text: str):
+    path = _cache_path(resume_text)
+    try:
+        with open(path, "r", encoding="utf-8") as cache_file:
+            return ReportSchema.model_validate(json.load(cache_file))
+    except (FileNotFoundError, OSError, ValueError, TypeError):
+        return None
+
+
+def _save_disk_cache(resume_text: str, report: ReportSchema) -> None:
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    path = _cache_path(resume_text)
+    temporary_path = f"{path}.tmp"
+    with open(temporary_path, "w", encoding="utf-8") as cache_file:
+        json.dump(report.model_dump(mode="json"), cache_file)
+    os.replace(temporary_path, path)
+
+
 def analyze_resume(pdf_path):
     """Returns the structured ReportSchema object (not markdown)."""
 
     resume_text = extract_text(pdf_path)
 
+    cached_report = _load_disk_cache(resume_text)
+    if cached_report is not None:
+        return cached_report
+
     report = _run_pipeline(resume_text)
+    _save_disk_cache(resume_text, report)
 
     return report

@@ -26,7 +26,7 @@ ICON_ADVICE = """<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2
 
 
 def show_home():
-    st.set_page_config(page_title="DataPilot AI", page_icon="◆", layout="wide")
+    st.set_page_config(page_title="CareerPilot AI", page_icon="◆", layout="wide")
 
     css_path = os.path.join(os.path.dirname(__file__), "style.css")
     if os.path.exists(css_path):
@@ -36,7 +36,7 @@ def show_home():
     # Sidebar
     with st.sidebar:
         st.markdown(
-            f"<div class='sidebar-brand'>{BRAND_MARK}<h2>DataPilot AI</h2>"
+            f"<div class='sidebar-brand'>{BRAND_MARK}<h2>CareerPilot AI</h2>"
             f"<span class='version'>v1.0</span></div>",
             unsafe_allow_html=True,
         )
@@ -48,7 +48,7 @@ def show_home():
         )
         st.markdown("---")
         st.markdown("**Features**")
-        st.markdown("- Resume Analyzer\n- Dataset Analyzer\n- ML Advisor\n- Reports")
+        st.markdown("- Resume Analyzer\n- Dataset Analyzer\n- Live Salary Intelligence\n- ML Advisor\n- Reports")
         st.markdown("---")
         st.markdown(
             "<div class='sidebar-footnote'>Powered by Gemini AI<br>Built with Python + Streamlit</div>",
@@ -65,8 +65,8 @@ def show_home():
 <div class="hero">
   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;flex-wrap:wrap">
     <div>
-      <h1>DataPilot AI</h1>
-      <p class="tagline">Premium AI career copilot — polish resumes, discover skill gaps, and get a learning roadmap.</p>
+    <h1>CareerPilot AI</h1>
+    <p class="tagline">AI-Powered Resume &amp; Job Intelligence Platform</p>
       <a class="cta" href="#upload">Analyze your resume →</a>
     </div>
     <div class="side-note">
@@ -208,8 +208,12 @@ def show_home():
 
         st.markdown(f"<div class='card'><h3>{ICON_CAREER} Career Opportunities</h3>", unsafe_allow_html=True)
         st.write("**Roles:** " + ", ".join(cr.roles))
-        st.write(f"**Salary:** {cr.salary}")
         st.write(f"**Future Scope:** {cr.future_scope}")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown(f"<div class='card highlight'><h3>{ICON_ADVICE} Live Salary Intelligence</h3>", unsafe_allow_html=True)
+        st.write(cr.salary)
+        st.caption("Salary guidance is enriched with live job-listing data when Adzuna credentials are configured.")
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown(f"<div class='card highlight'><h3>{ICON_ADVICE} Final Career Advice</h3>", unsafe_allow_html=True)
@@ -226,7 +230,7 @@ def show_home():
         st.download_button(
             label=":material/download: Download Markdown",
             data=md_content,
-            file_name="datapilot_report.md",
+            file_name="careerpilot_report.md",
             mime="text/markdown",
         )
 
@@ -249,7 +253,7 @@ def show_home():
             st.download_button(
                 label=":material/download: Download PDF",
                 data=pdf_buffer,
-                file_name="datapilot_report.pdf",
+                file_name="careerpilot_report.pdf",
                 mime="application/pdf",
             )
         except Exception:

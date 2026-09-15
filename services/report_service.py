@@ -14,7 +14,7 @@ def report_to_markdown(report: ReportSchema) -> str:
     cr = report.career
 
     lines = [
-        "# DataPilot AI Resume Report",
+        "# CareerPilot AI Resume Report",
         "",
         "## Career Domain",
         f"**Domain:** {cd.domain}  ",
