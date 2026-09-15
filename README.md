@@ -162,9 +162,6 @@ Deployed on **Streamlit Community Cloud**. `GEMINI_API_KEY` is set via Streamlit
 ---
 
 ## 📷 Screenshots
-
-> Add real screenshots to an `assets/` folder in the repo root, then they'll render below. These are placeholders — nothing renders here until the image files actually exist at these paths.
-
 ### Resume Analyzer
 
 ![Resume Dashboard](assets/resume.png)
