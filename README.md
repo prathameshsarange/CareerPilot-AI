@@ -19,7 +19,7 @@ Analyze resumes • Detect ATS Issues • Find Skill Gaps • Generate Career Ro
 <img src="https://img.shields.io/github/forks/prathameshsarange/DataPilot-AI?style=social">
 </p>
 
-**🔗 Live App:** [https://datapilot-ai11212.streamlit.app/](https://datapilot-ai11212.streamlit.app/)
+**🔗 Live App:** [https://careerpilot-ai12.streamlit.app/](https://careerpilot-ai12.streamlit.app/)
 
 </div>
 
