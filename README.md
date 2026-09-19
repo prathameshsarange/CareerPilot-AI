@@ -120,6 +120,7 @@ The Dataset Analyzer runs a simpler two-agent chain: **Dataset Agent → ML Advi
 DataPilot-AI
 │
 ├── agents/          # 5 pipeline agents + dataset agents
+├── assets/           # Screenshot images used in this README
 ├── core/             # Gemini client, prompts, config, JSON parsing helper
 ├── schemas/          # Pydantic ReportSchema + per-agent response schemas
 ├── services/         # Business logic (resume, dataset, report conversion, caching)
