@@ -84,6 +84,7 @@ The Dataset Analyzer runs a simpler two-agent chain: **Dataset Agent → ML Advi
 - ATS Score & Resume Rating
 - Career Domain & Experience Level Detection
 - Skill Gap Analysis (existing vs. missing, prioritized)
+- Resume vs. Job Description Matching (TF-IDF similarity + keyword gap detection, no extra API call)
 - 30/60/90-Day Learning Roadmap
 - Certification & Project Recommendations
 - Interview Question Generation
@@ -185,7 +186,7 @@ Deployed on **Streamlit Community Cloud**. `GEMINI_API_KEY` is set via Streamlit
 - ✅ Retry Logic for Transient API Failures
 - ✅ Process-Wide Result Caching
 - ✅ Real Tool/Function Calling (live salary lookup via Adzuna job listings)
-- ⏳ Resume vs. Job Description Matching
+- ✅ Resume vs. Job Description Matching
 - ⏳ User Authentication
 
 ---
