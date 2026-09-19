@@ -4,8 +4,9 @@ from datetime import datetime
 
 import streamlit as st
 
-from services.resume_service import analyze_resume
+from services.resume_service import analyze_resume, extract_text
 from services.report_service import report_to_markdown
+from services.jd_match_service import match_resume_to_jd
 from ui.dataset_page import show_dataset
 
 
@@ -129,11 +130,13 @@ def show_home():
         with st.spinner("AI analyzing your resume…"):
             try:
                 report = analyze_resume(save_path)
+                resume_text = extract_text(save_path)
             except Exception as e:
                 st.error(f"Analysis failed: {e}")
                 return
 
         st.session_state["report"] = report
+        st.session_state["resume_text"] = resume_text
 
         report_md = report_to_markdown(report)
         os.makedirs("reports", exist_ok=True)
@@ -148,7 +151,7 @@ def show_home():
         return
 
     st.success("Analysis completed", icon=":material/check_circle:")
-    tabs = st.tabs(["Dashboard", "Full Report", "Download"])
+    tabs = st.tabs(["Dashboard", "JD Match", "Full Report", "Download"])
 
     ra = report.resume_analysis
     cd = report.career_domain
@@ -221,10 +224,76 @@ def show_home():
         st.markdown("</div>", unsafe_allow_html=True)
 
     with tabs[1]:
+        st.markdown("<h4 style='margin-top:0'>Match your resume against a job description</h4>", unsafe_allow_html=True)
+        st.caption("Runs locally with TF-IDF similarity — no Gemini API call, doesn't count against the API limit.")
+
+        jd_text = st.text_area(
+            "Paste the job description",
+            height=220,
+            placeholder="Paste the full job description text here…",
+            key="jd_text_input",
+        )
+
+        compare_btn = st.button(":material/compare_arrows: Compare", disabled=not jd_text.strip())
+
+        if compare_btn:
+            resume_text = st.session_state.get("resume_text", "")
+            if not resume_text:
+                st.error("Resume text not found — please re-analyze your resume first.")
+            else:
+                try:
+                    match_result = match_resume_to_jd(resume_text, jd_text)
+                    st.session_state["jd_match_result"] = match_result
+                except ValueError as e:
+                    st.error(str(e))
+
+        match_result = st.session_state.get("jd_match_result")
+        if match_result:
+            score = match_result["match_score"]
+            st.markdown(f"<div class='card'><h3>{ICON_TARGET} Match Score</h3>", unsafe_allow_html=True)
+            st.metric("Overall Match", f"{score}%")
+            st.progress(min(int(score), 100) / 100)
+            # Note: this is raw TF-IDF cosine similarity, not a percentile or an
+            # "ATS pass probability." Even a genuinely strong resume/JD match
+            # typically scores 25-45% by this measure, not 70%+ — the bands
+            # below are calibrated to that, not to a 0-100 "grade" intuition.
+            if score < 15:
+                st.caption("Low overlap — the resume and this JD use quite different language/skills.")
+            elif score < 35:
+                st.caption("Moderate overlap — adding some missing keywords below could help.")
+            else:
+                st.caption("Strong overlap between resume and job description.")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+            k1, k2 = st.columns(2, gap="large")
+            with k1:
+                st.markdown(f"<div class='card'><h3>{ICON_GAP} Matched Keywords</h3>", unsafe_allow_html=True)
+                if match_result["matched_keywords"]:
+                    st.markdown(
+                        "".join(f"<span class='badge'>{kw}</span>" for kw in match_result["matched_keywords"]),
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.write("No overlapping keywords found.")
+                st.markdown("</div>", unsafe_allow_html=True)
+
+            with k2:
+                st.markdown(f"<div class='card'><h3>{ICON_ROADMAP} Missing Keywords</h3>", unsafe_allow_html=True)
+                if match_result["missing_keywords"]:
+                    st.markdown(
+                        "".join(f"<span class='badge'>{kw}</span>" for kw in match_result["missing_keywords"]),
+                        unsafe_allow_html=True,
+                    )
+                    st.caption("Consider adding these to your resume if you genuinely have this experience — don't fabricate skills.")
+                else:
+                    st.write("No missing keywords detected.")
+                st.markdown("</div>", unsafe_allow_html=True)
+
+    with tabs[2]:
         st.markdown("# Full AI Report")
         st.markdown(report_to_markdown(report))
 
-    with tabs[2]:
+    with tabs[3]:
         st.markdown("### Download Report")
         md_content = report_to_markdown(report)
         st.download_button(
